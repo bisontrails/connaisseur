@@ -1,5 +1,5 @@
 NAMESPACE = connaisseur
-IMAGE := $(shell yq e '.deployment.image' helm/values.yaml)
+IMAGE := "900876714356.dkr.ecr.us-east-2.amazonaws.com/connaisseur:dev"
 COSIGN_VERSION = 1.4.1
 
 .PHONY: all docker install unistall upgrade annihilate

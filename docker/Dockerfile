@@ -29,7 +29,11 @@ FROM base
 
 WORKDIR /app
 
-# Harden image
+RUN apk add docker-credential-ecr-login # necessary for deployments in AWS EKS to use IRSA permissions
+
+RUN mkdir -p /.ecr/log # not necessary, but INFO 'error' messages pop up complaining about not being able to create it
+RUN chmod 0755 /usr/bin/docker-credential-ecr-login
+
 COPY docker/harden.sh /
 RUN sh /harden.sh && rm /harden.sh
 
@@ -38,6 +42,8 @@ COPY --from=builder /install /usr/local
 COPY --from=cosign_loader /go/cosign/cosign-linux-amd64 /app/cosign/cosign
 COPY connaisseur /app/connaisseur
 
+
+RUN adduser connaisseur -H -u 10001 -D
 USER 10001:20001
 
 LABEL maintainer="Philipp Belitz <philipp.belitz@securesystems.de>"
