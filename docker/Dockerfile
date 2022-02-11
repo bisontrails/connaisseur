@@ -43,7 +43,7 @@ COPY --from=cosign_loader /go/cosign/cosign-linux-amd64 /app/cosign/cosign
 COPY connaisseur /app/connaisseur
 
 
-RUN adduser connaisseur -H -u 10001 -D
+RUN adduser connaisseur -u 10001 -D
 USER 10001:20001
 
 LABEL maintainer="Philipp Belitz <philipp.belitz@securesystems.de>"
